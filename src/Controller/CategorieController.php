@@ -13,13 +13,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'app_categorie')]
-    public function index(CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
+public function index(CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
 {
     $categories = $categorieRepository->findAll();
-    $taches = $tacheRepository->findAll();
+    $taches = $tacheRepository->findBy([], ["dateCreation" => "ASC"]);
 
     // Organisez les tâches par catégorie
     $tachesByCategory = [];
+    foreach ($categories as $categorie) {
+        $tachesByCategory[$categorie->getId()] = []; // Initialisez le tableau même si la catégorie n'a pas de tâches
+    }
+
     foreach ($taches as $tache) {
         $categoryId = $tache->getCategorie()->getId();
         $tachesByCategory[$categoryId][] = $tache;
@@ -30,5 +34,6 @@ class CategorieController extends AbstractController
         'tachesByCategory' => $tachesByCategory,
     ]);
 }
+
 
 }

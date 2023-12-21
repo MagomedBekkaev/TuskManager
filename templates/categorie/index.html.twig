@@ -1,30 +1,35 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+        {% endblock %}
+
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
-    <h1>Liste de catégories</h1>
-
-    {% for categorie in categories %}
-        <h2>{{ categorie.titre }}</h2>
-        {% if tachesByCategory[categorie.id] is defined %}
-            <table border="1">
-                <tr>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <!-- Ajoutez d'autres en-têtes de colonne si nécessaire -->
-                </tr>
-                {% for tache in tachesByCategory[categorie.id] %}
-                    <tr>
-                        <td>{{ tache.titre }}</td>
-                        <td>{{ tache.description }}</td>
-                        <!-- Ajoutez d'autres cellules de données si nécessaire -->
-                    </tr>
-                {% endfor %}
-            </table>
-            <br>
-        {% else %}
-            <p>Aucune tâche associée à cette catégorie.</p>
-        {% endif %}
-    {% endfor %}
+    {% if categories is not empty %}
+        <div class="categories-container">
+            {% for categorie in categories %}
+                <div class="category-wrapper">
+                    <h1>{{ categorie.titre }}</h1>
+                    {% if tachesByCategory is defined and tachesByCategory[categorie.id] is not empty %}
+                        <table class="categories-table">
+                            {% for tache in tachesByCategory[categorie.id] %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ tache.titre }}</strong><br>
+                                        {{ tache.description }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% else %}
+                        <p>Aucune tâche associée à cette catégorie.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Aucune catégorie disponible.</p>
+    {% endif %}
 {% endblock %}

@@ -24,7 +24,7 @@ class Tache
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\ManyToOne(inversedBy: 'tache')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Categorie $categorie = null;
 
     public function getId(): ?int

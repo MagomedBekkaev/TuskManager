@@ -1,0 +1,52 @@
+/* Ajoutez ces styles pour afficher les catégories horizontalement avec séparation */
+body {
+    background-color: #ffffff !important; /* Remplacez cette couleur par la couleur de fond souhaitée */
+}
+
+.categories-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.category-wrapper {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.categories-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.categories-table th,
+.categories-table td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+    position: relative; /* Ajoutez cette ligne pour positionner le pseudo-élément */
+}
+
+.categories-table td::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    border-right: 1px solid black; /* Ajoutez une bordure à droite de chaque cellule */
+}
+
+.categories-table th {
+    background-color: #f2f2f2; /* Couleur de fond pour les titres de catégories */
+}
+
+/* Facultatif : ajoutez ces styles pour améliorer la lisibilité */
+.categories-list {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.categories-list-item {
+    margin-bottom: 5px;
+}
