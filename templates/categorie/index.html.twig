@@ -1,12 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CategorieController!{% endblock %}
+{% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
-    <h1>Liste de categories</h1>
+    <h1>Liste de catégories</h1>
 
     {% for categorie in categories %}
-        {{ categorie.titre }}
+        <h2>{{ categorie.titre }}</h2>
+        {% if tachesByCategory[categorie.id] is defined %}
+            <table border="1">
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <!-- Ajoutez d'autres en-têtes de colonne si nécessaire -->
+                </tr>
+                {% for tache in tachesByCategory[categorie.id] %}
+                    <tr>
+                        <td>{{ tache.titre }}</td>
+                        <td>{{ tache.description }}</td>
+                        <!-- Ajoutez d'autres cellules de données si nécessaire -->
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+        {% else %}
+            <p>Aucune tâche associée à cette catégorie.</p>
+        {% endif %}
     {% endfor %}
-
 {% endblock %}
