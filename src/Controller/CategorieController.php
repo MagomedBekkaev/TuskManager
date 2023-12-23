@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use App\Entity\Categorie;
@@ -21,7 +20,7 @@ class CategorieController extends AbstractController
         // Organisez les tâches par catégorie
         $tachesByCategory = [];
         foreach ($categories as $categorie) {
-            $tachesByCategory[$categorie->getId()] = []; // Initialisez le tableau même si la catégorie n'a pas de tâches
+            $tachesByCategory[$categorie->getId()] = []; // Initialise le tableau même si la catégorie n'a pas de tâches
         }
 
         foreach ($taches as $tache) {
@@ -33,5 +32,10 @@ class CategorieController extends AbstractController
             'categories' => $categories,
             'tachesByCategory' => $tachesByCategory,
         ]);
+    }
+
+    #[Route('/edit/{id}', name: 'app_edit_title')]
+    public function editTitle(){
+        //traiter l'envoir du formulaire
     }
 }
