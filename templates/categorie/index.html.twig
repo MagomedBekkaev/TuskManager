@@ -1,24 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        {% endblock %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
 
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
     {% if categories is not empty %}
         <div class="categories-container">
-            {% for categorie in categories %}
+            {% for category in categories %}
                 <div class="category-wrapper">
-                    <h1>{{ categorie.titre }}</h1>
-                    {% if tachesByCategory is defined and tachesByCategory[categorie.id] is not empty %}
+                    <!-- Update the category title rendering -->
+                    <h1 class="editable-title" data-category-id="{{ category.id }}">{{ category.titre }}</h1>
+
+                    {# Consider removing the form if not needed for now #}
+                    <form action="{{ path('app_edit_title', {'id': category.titre}) }}" method="POST">
+                        <input type="text" name="new_input_title">
+                        <!-- Add any other form elements if needed -->
+                    </form>
+
+                    {% if tachesByCategory is defined and tachesByCategory[category.id] is not empty %}
                         <table class="categories-table">
-                            {% for tache in tachesByCategory[categorie.id] %}
+                            {% for task in tachesByCategory[category.id] %}
                                 <tr>
                                     <td>
-                                        <strong>{{ tache.titre }}</strong><br>
-                                        {{ tache.description }}
+                                        <!-- Update the task title rendering inside the loop -->
+                                        <strong class="editable-title" data-task-id="{{ task.id }}">{{ task.titre }}</strong><br>
+                                        {{ task.description }}
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -32,4 +42,9 @@
     {% else %}
         <p>Aucune catégorie disponible.</p>
     {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('editTitle.js') }}"></script>
 {% endblock %}
