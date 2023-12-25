@@ -12,20 +12,20 @@
         <div class="categories-container">
             {% for category in categories %}
                 <div class="category-wrapper">
-                    <!-- Update the category title rendering -->
                     <h1>{{ category.titre }}</h1>
 
-                    <form action="" class="editTitle">
+                    {# Edit Title Form #}
+                    <form action="{{ path('app_edit_categorie', {'id': category.id}) }}" class="editTitle" method="post">
                         <input type="text">
                         <input type="submit">
                     </form>
 
-                    {% if tachesByCategory is defined and tachesByCategory[category.id] is not empty %}
+                    {% set tasks = tachesByCategory[category.id] ?? [] %}
+                    {% if tasks is not empty %}
                         <table class="categories-table">
-                            {% for task in tachesByCategory[category.id] %}
+                            {% for task in tasks %}
                                 <tr>
                                     <td>
-                                        <!-- Update the task title rendering inside the loop -->
                                         <strong class="editable-title" data-task-id="{{ task.id }}">{{ task.titre }}</strong><br>
                                         {{ task.description }}
                                     </td>
