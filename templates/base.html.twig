@@ -22,8 +22,13 @@
             <a href="{{ path('app_register') }}">S'inscrire</a>
         {% endif %}
 
+        {# Si admin, afficher le panneau d'administration #}
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="">Panneau d'administration</a>
+        {% endif %}
+
         {% block body %}
-            <h1>BITE</h1>
+            
         {% endblock %}
     </body>
 </html>
