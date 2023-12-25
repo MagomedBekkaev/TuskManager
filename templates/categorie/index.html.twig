@@ -13,12 +13,11 @@
             {% for category in categories %}
                 <div class="category-wrapper">
                     <!-- Update the category title rendering -->
-                    <h1 class="editable-title" data-category-id="{{ category.id }}">{{ category.titre }}</h1>
+                    <h1>{{ category.titre }}</h1>
 
-                    {# Consider removing the form if not needed for now #}
-                    <form action="{{ path('app_edit_title', {'id': category.titre}) }}" method="POST">
-                        <input type="text" name="new_input_title">
-                        <!-- Add any other form elements if needed -->
+                    <form action="" class="editTitle">
+                        <input type="text">
+                        <input type="submit">
                     </form>
 
                     {% if tachesByCategory is defined and tachesByCategory[category.id] is not empty %}

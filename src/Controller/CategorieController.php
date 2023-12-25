@@ -34,24 +34,12 @@ class CategorieController extends AbstractController
             'categories' => $categories,
             'tachesByCategory' => $tachesByCategory,
         ]);
+    }
  
-    #[Route('/editTitle/{id}', name: 'app_edit_categorie')]
-    public function editTitle(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/categorie/editTitle/{id}', name: 'app_edit_categorie')]
+    public function editTitle(Categorie $categorie,Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
-        // Récupérer l'utilisateur en session
-        $user = $this->getUser();
-
-        // Récupérer l'objet catégorie a modifier
-        $categorie = $user->getCategorie()
-
-        $form = $this->createForm(EditTitleCatType::class);
-
-        $form->handleRequest($request);
-
-        if($form->isSubmitted && $form->isValid()) {
-            
-            $entityManager->persist($categorie)
-
-        }
+        
+        
     }
 }

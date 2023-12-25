@@ -21,6 +21,10 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Tache::class, orphanRemoval: true)]
     private Collection $tache;
 
+    #[ORM\ManyToOne(inversedBy: 'categories')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->tache = new ArrayCollection();
@@ -76,4 +80,16 @@ class Categorie
     // public function __toString(){
     //     return $this->titre." (".$this->description.")";
     // }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
 }
