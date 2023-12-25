@@ -16,7 +16,21 @@
     <body>
         <nav>
             <ul>
-                <li><img src="{{ asset('images/logo3.png') }}" alt="Logo" class="navbar-logo"></li> 
+                <!-- Logo part wrapped as a clickable link -->
+                <div class="logo-container">
+                    <a href="{{ path('app_categorie') }}" class="logo-link">
+                        <div class="logo">
+                            <div class="logo-part tusk">TUSK</div>
+                            <!-- The image tag for the logo can be added here if necessary -->
+                            <img src="{{ asset('images/logo3.png') }}" alt="Logo" class="navbar-logo">
+                            <div class="logo-part manager">MANAGER</div>
+                        </div>
+                    </a>
+                </div>
+
+                    {# <div class="vanish-disorder">VANISH DISORDER</div> #}
+                </div>
+                {# <li><img src="{{ asset('images/logo_complet2.png') }}" alt="Logo" class="navbar-logo"></li>  #}
                 <li><a href="#">Mes projets</a></li>
                 <li><a href="#">Test</a></li>
         
@@ -35,6 +49,7 @@
             </div>
         </nav>
         
+                
 
         {% block body %}
             

@@ -3,6 +3,40 @@ body, html {
     padding: 0;
 }
 
+/* Add the new logo CSS rules here */
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-part {
+    margin: 0 10px;
+}
+
+.logo .tusk {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo .manager {
+    font-size: 16px;
+}
+
+/* .vanish-disorder {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+} */
+
+
 body {
     font-family: Arial, sans-serif;
     background-color: #F0F0F0 !important; /* Adjusted to a light grey as an example */
@@ -10,14 +44,15 @@ body {
 
 .navbar-logo {
     height: 50px; /* Adjust the height as needed */
-    margin-right: 20px; /* Space between logo and menu items */
-    margin-left: 20px; /* Space between logo and menu items */
+    margin-right: 0px; /* Space between logo and menu items */
+    margin-left: 0px; /* Space between logo and menu items */
+    margin-bottom: 5px;
 }
 
 nav {
     background-color: #0E2F56; /* Adjusted to a dark blue from the logo */
     color: white;
-    padding: 10px;
+    /* padding: 1px; */
     display: flex;
     justify-content: space-between;
     align-items: center; /* Centers items vertically */
@@ -39,7 +74,7 @@ nav ul li a, .auth-links a {
     display: inline-block;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 25px 16px;
     text-decoration: none;
 }
 
@@ -53,10 +88,16 @@ nav ul li a, .auth-links a {
 }
 
 nav ul li a:hover, .auth-links a:hover {
-    background-color: #191970; /* Darker shade of midnight blue for hover */
+    background-color: #0c2645; /* Darker shade of midnight blue for hover */
 }
 
-/* Admin link hover */
-nav ul li:first-child a:hover {
-    /* background-color: #45a049; */
+.logo-link {
+    text-decoration: none; /* Removes underline from links */
+    color: inherit; /* Inherits text color from parent elements */
 }
+
+.logo-link:hover {
+    /* You can add hover effects if you like, such as changing the opacity */
+    opacity: 0.8;
+}
+
