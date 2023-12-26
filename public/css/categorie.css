@@ -11,7 +11,7 @@
     white-space: nowrap;
     width: 100%;
     max-height: 100%;
-    padding-top: 10px;
+    padding: 10px 0 0 10px;
 }
 
 .categorie {
@@ -26,12 +26,15 @@
 .tasks {
     overflow-y: auto; /* Allow scrolling within tasks if they exceed their container height */
     flex-grow: 1; /* Allow task container to grow based on content */
+    padding-right: 10px; /* Space between tasks and the scrollbar */
+    margin-right: -10px; /* Offset the added padding to maintain container width */
 }
 
 .task {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
+    box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
 }
 
 /* Styling for WebKit browsers */
@@ -41,11 +44,11 @@
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Color of the track */
+    background: #aaa; /* Color of the track */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #888; /* Color of the scrollbar itself */
+    background: #777; /* Color of the scrollbar itself */
     border-radius: 5px;
 }
 
