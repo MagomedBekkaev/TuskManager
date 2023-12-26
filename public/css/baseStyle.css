@@ -30,13 +30,6 @@ body, html {
     font-size: 16px;
 }
 
-/* .vanish-disorder {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-} */
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #F0F0F0 !important; /* Adjusted to a light grey as an example */
@@ -74,7 +67,8 @@ nav ul li a, .auth-links a {
     display: inline-block;
     color: white;
     text-align: center;
-    padding: 25px 16px;
+    padding: 20px 16px;
+    margin-top: 8px;
     text-decoration: none;
 }
 
@@ -88,7 +82,8 @@ nav ul li a, .auth-links a {
 }
 
 nav ul li a:hover, .auth-links a:hover {
-    background-color: #0c2645; /* Darker shade of midnight blue for hover */
+    /* background-color: #0c2645; */
+    opacity: 0.5;
 }
 
 .logo-link {
