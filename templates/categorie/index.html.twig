@@ -2,46 +2,34 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/categorie.css') }}">
 {% endblock %}
 
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
-    {% if categories is not empty %}
-        <div class="categories-container">
-            {% for category in categories %}
-                <div class="category-wrapper">
-                    <h1>{{ category.titre }}</h1>
-
-                    {# Edit Title Form #}
-                    <form action="{{ path('app_edit_categorie', {'id': category.id}) }}" class="editTitle" method="post">
-                        <input type="text">
-                        <input type="submit">
-                    </form>
-
-                    {% set tasks = tachesByCategory[category.id] ?? [] %}
-                    {% if tasks is not empty %}
-                        <table class="categories-table">
-                            {% for task in tasks %}
-                                <tr>
-                                    <td>
-                                        <strong class="editable-title" data-task-id="{{ task.id }}">{{ task.titre }}</strong><br>
-                                        {{ task.description }}
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    {% else %}
-                        <p>Aucune tâche associée à cette catégorie.</p>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>Aucune catégorie disponible.</p>
-    {% endif %}
-{% endblock %}
+<div class="container">
+    <div class="categories">
+        {% for categorie in categories %}
+            <div class="categorie">
+                <h2>{{ categorie.titre }}</h2>
+                {% if tachesByCategory[categorie.id] is not empty %}
+                    <div class="tasks">
+                        {% for tache in tachesByCategory[categorie.id] %}
+                            <div class="task">
+                                <h3>{{ tache.titre }}</h3>
+                                <p>{{ tache.description }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No tasks in this category.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}

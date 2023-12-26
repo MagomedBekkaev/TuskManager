@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    max-height: 100vh; /* Maximum height is the viewport height */
+    overflow-y: auto; /* Allow scrolling within the container if content exceeds viewport height */
+}
+
+.categories {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.categorie {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px; /* Minimum height for visibility */
+}
+
+.tasks {
+    overflow-y: auto; /* Allow scrolling within tasks if they exceed their container height */
+    flex-grow: 1; /* Allow task container to grow based on content */
+}
+
+.task {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+/* Styling for WebKit browsers */
+::-webkit-scrollbar {
+    width: 10px; /* Width of the scrollbar */
+    height: 10px; /* Height of the horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; /* Color of the scrollbar itself */
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color when hovered */
+}
+
+/* Styling for Firefox */
+* {
+    scrollbar-width: thin; /* 'auto', 'thin', 'none' */
+    scrollbar-color: #888 #f1f1f1; /* Thumb and track color */
+}
