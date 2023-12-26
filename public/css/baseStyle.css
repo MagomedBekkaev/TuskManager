@@ -1,6 +1,8 @@
-body, html {
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Add the new logo CSS rules here */
@@ -49,6 +51,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center; /* Centers items vertically */
+    height: 50px;
 }
 
 nav ul {
