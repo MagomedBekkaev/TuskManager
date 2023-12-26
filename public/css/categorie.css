@@ -1,17 +1,20 @@
+body {
+    overflow-x: hidden;
+    max-height: 100vh; /* Maximum height is the viewport height */
+}
+
 .container {
     display: flex;
-    max-height: 90vh; /* Maximum height is the viewport height */
-    overflow-y: auto; /* Allow scrolling within the container if content exceeds viewport height */
+    height: calc(100vh - 68px)
 }
 
 .categories {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    white-space: nowrap;
-    width: 100%;
-    max-height: 100%;
-    padding: 10px 0 0 10px;
+    align-items: flex-start; /* Align categories to the start of the container */
+    padding: 10px;
+    
 }
 
 .categorie {
@@ -20,7 +23,13 @@
     margin-right: 20px;
     display: flex;
     flex-direction: column;
-    min-height: 100px; /* Minimum height for visibility */
+    min-height: 100px;
+    max-height: 90vh; /* Maximum height of each category */
+    overflow-y: auto; /* Vertical scrollbar for each category */
+    min-width: 350px; 
+    max-width: 350px;
+    align-self: flex-start; /* Allow each category to grow independently */
+
 }
 
 .tasks {
@@ -28,6 +37,7 @@
     flex-grow: 1; /* Allow task container to grow based on content */
     padding-right: 10px; /* Space between tasks and the scrollbar */
     margin-right: -10px; /* Offset the added padding to maintain container width */
+    /* width: 100%; */
 }
 
 .task {
@@ -35,6 +45,11 @@
     padding: 10px;
     margin-bottom: 10px;
     box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    line-break: anywhere;
 }
 
 /* Styling for WebKit browsers */
@@ -45,6 +60,7 @@
 
 ::-webkit-scrollbar-track {
     background: #aaa; /* Color of the track */
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {

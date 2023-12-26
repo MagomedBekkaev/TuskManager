@@ -1,8 +1,17 @@
-html, body {
-    height: 100%;
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
     overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F0F0F0 !important;
 }
 
 /* Add the new logo CSS rules here */
@@ -10,7 +19,6 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 10px;
 }
 
 .logo {
@@ -32,11 +40,6 @@ html, body {
     font-size: 16px;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #F0F0F0 !important; /* Adjusted to a light grey as an example */
-}
-
 .navbar-logo {
     height: 50px; /* Adjust the height as needed */
     margin-right: 0px; /* Space between logo and menu items */
@@ -47,11 +50,10 @@ body {
 nav {
     background-color: #0E2F56; /* Adjusted to a dark blue from the logo */
     color: white;
-    /* padding: 1px; */
     display: flex;
     justify-content: space-between;
     align-items: center; /* Centers items vertically */
-    height: 50px;
+    padding: 5px;
 }
 
 nav ul {
@@ -71,7 +73,6 @@ nav ul li a, .auth-links a {
     color: white;
     text-align: center;
     padding: 20px 16px;
-    margin-top: 8px;
     text-decoration: none;
 }
 

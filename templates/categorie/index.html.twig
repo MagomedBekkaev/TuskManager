@@ -1,10 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/categorie.css') }}">
-{% endblock %}
-
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
@@ -12,12 +7,12 @@
     <div class="categories">
         {% for categorie in categories %}
             <div class="categorie">
-                <h2>{{ categorie.titre }}</h2>
-                {% if tachesByCategory[categorie.id] is not empty %}
+                <h2>{{ categorie }}</h2>
+                {% if categorie.taches is not empty %}
                     <div class="tasks">
-                        {% for tache in tachesByCategory[categorie.id] %}
+                        {% for tache in categorie.taches %}
                             <div class="task">
-                                <h3>{{ tache.titre }}</h3>
+                                <h3>{{ tache }}</h3>
                                 <p>{{ tache.description }}</p>
                             </div>
                         {% endfor %}
@@ -29,9 +24,4 @@
         {% endfor %}
     </div>
 </div>
-    {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('editTitle.js') }}"></script>
 {% endblock %}

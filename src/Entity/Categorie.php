@@ -19,7 +19,7 @@ class Categorie
     private ?string $titre = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Tache::class, orphanRemoval: true)]
-    private Collection $tache;
+    private Collection $taches;
 
     #[ORM\ManyToOne(inversedBy: 'categories')]
     #[ORM\JoinColumn(nullable: false)]
@@ -27,7 +27,7 @@ class Categorie
 
     public function __construct()
     {
-        $this->tache = new ArrayCollection();
+        $this->taches = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -50,36 +50,36 @@ class Categorie
     /**
      * @return Collection<int, Tache>
      */
-    public function getTache(): Collection
+    public function getTaches(): Collection
     {
-        return $this->tache;
+        return $this->taches;
     }
 
-    public function addTache(Tache $tache): static
+    public function addTaches(Tache $taches): static
     {
-        if (!$this->tache->contains($tache)) {
-            $this->tache->add($tache);
-            $tache->setCategorie($this);
+        if (!$this->taches->contains($taches)) {
+            $this->taches->add($taches);
+            $taches->setCategorie($this);
         }
 
         return $this;
     }
 
-    public function removeTache(Tache $tache): static
+    public function removeTaches(Tache $taches): static
     {
-        if ($this->tache->removeElement($tache)) {
+        if ($this->taches->removeElement($taches)) {
             // set the owning side to null (unless already changed)
-            if ($tache->getCategorie() === $this) {
-                $tache->setCategorie(null);
+            if ($taches->getCategorie() === $this) {
+                $taches->setCategorie(null);
             }
         }
 
         return $this;
     }
 
-    // public function __toString(){
-    //     return $this->titre." (".$this->description.")";
-    // }
+    public function __toString(){
+        return $this->titre;
+    }
 
     public function getUser(): ?User
     {

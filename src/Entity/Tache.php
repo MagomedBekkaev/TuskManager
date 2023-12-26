@@ -23,7 +23,7 @@ class Tache
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateCreation = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tache')]
+    #[ORM\ManyToOne(inversedBy: 'taches')]
     #[ORM\JoinColumn(nullable: true)]
     private ?Categorie $categorie = null;
 
@@ -85,7 +85,7 @@ class Tache
     }
 
     public function __toString(){
-        return $this->titre." (".$this->description.")";
+        return $this->titre;
     }
 
     public function getUser(): ?User

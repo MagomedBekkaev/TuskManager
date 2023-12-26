@@ -2,57 +2,49 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        
-        {% block stylesheets %}
-            <link rel="stylesheet" href="{{ asset('css/baseStyle.css') }}">
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
+        <link rel="stylesheet" href="{{ asset('css/baseStyle.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/categorie.css') }}">
     </head>
     <body>
-        <nav>
-            <ul>
-                <!-- Logo part wrapped as a clickable link -->
-                <div class="logo-container">
-                    <a href="{{ path('app_categorie') }}" class="logo-link">
-                        <div class="logo">
-                            <div class="logo-part tusk">TUSK</div>
-                            <!-- The image tag for the logo can be added here if necessary -->
-                            <img src="{{ asset('images/logo3.png') }}" alt="Logo" class="navbar-logo">
-                            <div class="logo-part manager">MANAGER</div>
-                        </div>
-                    </a>
-                </div>
-
-                    {# <div class="vanish-disorder">VANISH DISORDER</div> #}
-                </div>
-                {# <li><img src="{{ asset('images/logo_complet2.png') }}" alt="Logo" class="navbar-logo"></li>  #}
-                <li><a href="#">Mes projets</a></li>
-                <li><a href="#">Test</a></li>
-        
-                {% if is_granted('ROLE_ADMIN') %}
-                    <li><a href="#">Panneau d'administration</a></li>
-                {% endif %}
-            </ul>
-            <div class="auth-links">
-                {% if app.user %}
-                    <a href="">Mon profil</a>
-                    <a href="{{ path('app_logout') }}" class="auth">Se déconnecter</a>
-                {% else %}
-                    <a href="{{ path('app_login') }}" class="auth">Se connecter</a>
-                    <a href="{{ path('app_register') }}" class="auth">S'inscrire</a>
-                {% endif %}
-            </div>
-        </nav>
-        
-                
-
-        {% block body %}
+        <header>
+            <nav>
+                <ul>
+                    <!-- Logo part wrapped as a clickable link -->
+                    <div class="logo-container">
+                        <a href="{{ path('app_categorie') }}" class="logo-link">
+                            <div class="logo">
+                                <div class="logo-part tusk">TUSK</div>
+                                <!-- The image tag for the logo can be added here if necessary -->
+                                <img src="{{ asset('images/logo3.png') }}" alt="Logo" class="navbar-logo">
+                                <div class="logo-part manager">MANAGER</div>
+                            </div>
+                        </a>
+                    </div>
+    
+                        {# <div class="vanish-disorder">VANISH DISORDER</div> #}
+                    </div>
+                    {# <li><img src="{{ asset('images/logo_complet2.png') }}" alt="Logo" class="navbar-logo"></li>  #}
+                    <li><a href="#">Mes projets</a></li>
+                    <li><a href="#">Test</a></li>
             
-        {% endblock %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="#">Panneau d'administration</a></li>
+                    {% endif %}
+                </ul>
+                <div class="auth-links">
+                    {% if app.user %}
+                        <a href="">Mon profil</a>
+                        <a href="{{ path('app_logout') }}" class="auth">Se déconnecter</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" class="auth">Se connecter</a>
+                        <a href="{{ path('app_register') }}" class="auth">S'inscrire</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        {% block body %}{% endblock %}
     </body>
 </html>

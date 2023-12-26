@@ -17,22 +17,9 @@ class CategorieController extends AbstractController
     public function index(CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
     {
         $categories = $categorieRepository->findAll();
-        $taches = $tacheRepository->findBy([], ["dateCreation" => "ASC"]);
-
-        // Organisez les tâches par catégorie
-        $tachesByCategory = [];
-        foreach ($categories as $categorie) {
-            $tachesByCategory[$categorie->getId()] = []; // Initialise le tableau même si la catégorie n'a pas de tâches
-        }
-
-        foreach ($taches as $tache) {
-            $categoryId = $tache->getCategorie()->getId();
-            $tachesByCategory[$categoryId][] = $tache;
-        }
 
         return $this->render('categorie/index.html.twig', [
             'categories' => $categories,
-            'tachesByCategory' => $tachesByCategory,
         ]);
     }
  
