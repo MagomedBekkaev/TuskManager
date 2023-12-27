@@ -3,6 +3,9 @@
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
+
+    <a href="{{ path('app_new_categorie') }}"> Créer une categorie</a>
+
     <div class="container">
         <div class="categories">
             {% for categorie in categories %}

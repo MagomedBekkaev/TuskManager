@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    
+    <div class='container'>
+        <h1>Création d'une categorie</h1>
+
+        {{ form(form)}}
+    </div>
+
+    {# Demander le mot de passe pour confirmer la suppression du compte #}
+    {# <form action="{{ path('app_delete_user') }}" method="post">
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <input type="hidden" name="userId" value="{{ app.user.id }}">
+        <button class="btn btn-danger">Supprimer</button>
+    </form>
+    <button class="btn btn-primary" onclick="cancelDelete()">Annuler</button> #}
+
+{% endblock body %} 
