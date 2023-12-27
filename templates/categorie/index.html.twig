@@ -3,25 +3,25 @@
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
-<div class="container">
-    <div class="categories">
-        {% for categorie in categories %}
-            <div class="categorie">
-                <h2>{{ categorie }}</h2>
-                {% if categorie.taches is not empty %}
-                    <div class="tasks">
-                        {% for tache in categorie.taches %}
-                            <div class="task">
-                                <h3>{{ tache }}</h3>
-                                <p>{{ tache.description }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p>No tasks in this category.</p>
-                {% endif %}
-            </div>
-        {% endfor %}
+    <div class="container">
+        <div class="categories">
+            {% for categorie in categories %}
+                <div class="categorie">
+                    <h2>{{ categorie }}</h2>
+                    {% if categorie.taches is not empty %}
+                        <div class="tasks">
+                            {% for tache in categorie.taches %}
+                                <div class="task">
+                                    <h3>{{ tache }}</h3>
+                                    <p>{{ tache.description }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>No tasks in this category.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
 {% endblock %}

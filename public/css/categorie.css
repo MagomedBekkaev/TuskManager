@@ -1,18 +1,18 @@
 body {
     overflow-x: hidden;
-    max-height: 100vh; /* Maximum height is the viewport height */
+    max-height: 100vh; 
 }
 
 .container {
     display: flex;
-    height: calc(100vh - 68px)
+    height: calc(100vh - 70px)
 }
 
 .categories {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    align-items: flex-start; /* Align categories to the start of the container */
+    align-items: flex-start; 
     padding: 10px;
     
 }
@@ -24,27 +24,26 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100px;
-    max-height: 90vh; /* Maximum height of each category */
-    overflow-y: auto; /* Vertical scrollbar for each category */
+    max-height: 90vh; 
+    overflow-y: auto;
     min-width: 350px; 
     max-width: 350px;
-    align-self: flex-start; /* Allow each category to grow independently */
-
+    align-self: flex-start; 
 }
 
 .tasks {
-    overflow-y: auto; /* Allow scrolling within tasks if they exceed their container height */
-    flex-grow: 1; /* Allow task container to grow based on content */
-    padding-right: 10px; /* Space between tasks and the scrollbar */
-    margin-right: -10px; /* Offset the added padding to maintain container width */
-    /* width: 100%; */
+    overflow-y: auto; 
+    flex-grow: 1; 
+    padding-right: 10px; 
+    margin-right: -10px; /
+    
 }
 
 .task {
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 10px;
-    box-sizing: border-box; /* Ensures padding doesn't affect the overall width */
+    box-sizing: border-box; 
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -52,28 +51,27 @@ body {
     line-break: anywhere;
 }
 
-/* Styling for WebKit browsers */
+
 ::-webkit-scrollbar {
-    width: 10px; /* Width of the scrollbar */
-    height: 10px; /* Height of the horizontal scrollbar */
+    width: 10px; 
+    height: 10px; 
 }
 
 ::-webkit-scrollbar-track {
-    background: #aaa; /* Color of the track */
+    background: #aaa; 
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #777; /* Color of the scrollbar itself */
+    background: #777; 
     border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Color when hovered */
+    background: #555; 
 }
 
-/* Styling for Firefox */
 * {
-    scrollbar-width: thin; /* 'auto', 'thin', 'none' */
-    scrollbar-color: #888 #f1f1f1; /* Thumb and track color */
+    scrollbar-width: thin; 
+    scrollbar-color: #888 #f1f1f1; 
 }
