@@ -50,11 +50,4 @@ class CategorieType extends AbstractType
             'data_class' => Categorie::class,
         ]);
     }
-
-    // public function configureOptions(OptionsResolver $resolver): void
-    // {
-    //     $resolver->setDefaults([
-    //         'data_class' => Categorie::class,
-    //     ]);
-    // }
 }
