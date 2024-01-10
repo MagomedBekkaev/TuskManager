@@ -3,14 +3,31 @@
 {% block title %}Liste de Catégories et Tâches{% endblock %}
 
 {% block body %}
-
-    <a href="{{ path('app_new_categorie') }}"> Créer une categorie</a>
-
     <div class="container">
+
+        <a href="{{ path('app_new_categorie') }}" class="create-category-btn">Créer une catégorie</a>
+
         <div class="categories">
             {% for categorie in categories %}
                 <div class="categorie">
                     <h2>{{ categorie }}</h2>
+
+                    <a href="{{ path('app_edit_categorie', {'id' : categorie.id}) }}">Modifier le titre</a>
+
+                    <!-- Add Task Button -->
+                    <button id="add-btn-{{ loop.index }}" onclick="toggleForm('form-{{ loop.index }}')">Ajouter une tache</button>
+
+                    <!-- Form, Initially Hidden -->
+                    <form id="form-{{ loop.index }}" action="{{ path('app_new_task') }}" method="post" style="display: none;">
+                        <input type="text" name="titre" placeholder="Titre" required>
+                        <input type="text" name="description" placeholder="Détails de votre tache">
+                        <button type="submit">Valider</button>
+                        <!-- Cancel Button -->
+                        <button type="button" onclick="cancelForm('form-{{ loop.index }}')">Annuler</button>
+                    </form>
+
+                    
+
                     {% if categorie.taches is not empty %}
                         <div class="tasks">
                             {% for tache in categorie.taches %}
@@ -21,10 +38,14 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p>No tasks in this category.</p>
+                        <p class="no-tasks">Il n'y a pas de tache dans cette categorie</p>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     </div>
+
+    {% block javascripts %}
+        <script src="{{ asset('js/editTitle.js') }}"></script>
+    {% endblock %}
 {% endblock %}

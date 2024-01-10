@@ -34,10 +34,13 @@ class CategorieController extends AbstractController
     }
  
     #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
-    public function editCategorie(Categorie $categorie,Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/categorie/{id}/edit', name: 'app_edit_categorie', methods: ['GET', 'POST'])]
+    public function new_editCategorie(Categorie $categorie = null, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
-        $categorie = new Categorie();
-        $categorie->setUser($this->getUser()); // Set the user before creating the form
+        if(!$categorie) {
+            $categorie = new Categorie();
+            $categorie->setUser($this->getUser()); // Set the user before creating the form
+        }
 
         $form = $this->createForm(CategorieType::class, $categorie);
         
