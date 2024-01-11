@@ -10,17 +10,15 @@
             {% for categorie in categories %}
                 <div class="categorie">
                     <!-- Title with onclick event passing the category title -->
-                    <!-- Title -->
-        <!-- Title with onclick event passing the category title -->
-        <h2 id="title-{{ loop.index }}" onclick="toggleTitleForm('{{ loop.index }}', '{{ categorie }}')">{{ categorie }}</h2>
+                    <h2 id="title-{{ loop.index }}" onclick="toggleTitleForm('{{ loop.index }}', '{{ categorie }}')">{{ categorie }}</h2>
 
-        <!-- Edit Form -->
-        <form id="edit-form-{{ loop.index }}" method="post" action="{{ path('edit_title', {'id': categorie.id}) }}" style="display: none;">
-            <!-- Textarea with an ID -->
-            <textarea id="textarea-{{ loop.index }}" name="titre" required></textarea>
-            <button type="submit">Valider</button>
-            <button type="button" onclick="cancelEdit('{{ loop.index }}')">Annuler</button>
-        </form>
+                    <!-- Edit Form -->
+                    <form id="edit-form-{{ loop.index }}" method="post" action="{{ path('edit_title', {'id': categorie.id}) }}" style="display: none;">
+                        <!-- Textarea with an ID -->
+                        <textarea id="textarea-{{ loop.index }}" name="titre" required></textarea>
+                        <button type="submit">Valider</button>
+                        <button type="button" onclick="cancelEdit('{{ loop.index }}')">Annuler</button>
+                    </form>
 
                     <!-- Add Task Button -->
                     <button id="add-btn-{{ loop.index }}" onclick="toggleForm('form-{{ loop.index }}')">Ajouter une tache</button>
