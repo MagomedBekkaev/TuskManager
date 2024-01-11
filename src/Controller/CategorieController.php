@@ -33,18 +33,44 @@ class CategorieController extends AbstractController
         ]);
     }
  
+    // #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
+    // #[Route('/categorie/{id}/edit', name: 'app_edit_categorie', methods: ['GET', 'POST'])]
+    // public function new_editCategorie(Categorie $categorie = null, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    // {
+    //     if(!$categorie) {
+    //         $categorie = new Categorie();
+    //         $categorie->setUser($this->getUser()); // Set the user before creating the form
+    //     }
+
+    //     $form = $this->createForm(CategorieType::class, $categorie);
+        
+    //     $form->handleRequest($request);
+    //     if($form->isSubmitted() && $form->isValid()) {
+    //         $categorie = $form->getData();
+
+    //         $entityManager->persist($categorie);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+    //         }
+
+    //     return $this->render('categorie/new.html.twig', [
+    //         'form' => $form->createView()
+    //     ]);
+    // }
+
+
+
     #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
-    #[Route('/categorie/{id}/edit', name: 'app_edit_categorie', methods: ['GET', 'POST'])]
-    public function new_editCategorie(Categorie $categorie = null, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    public function newCategorie(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
-        if(!$categorie) {
             $categorie = new Categorie();
             $categorie->setUser($this->getUser()); // Set the user before creating the form
-        }
 
         $form = $this->createForm(CategorieType::class, $categorie);
         
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid()) {
             $categorie = $form->getData();
 
@@ -58,5 +84,21 @@ class CategorieController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-}
 
+
+    #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
+    public function editCategorie($id, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
+    {
+        $categorie = $categorieRepository->find($id); // Load the existing category
+    
+        if (!$categorie) {
+            throw $this->createNotFoundException('Category not found');
+        }
+    
+        $categorie->setTitre($request->request->get('titre'));
+        $entityManager->flush(); 
+    
+        return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+    }
+    
+}
