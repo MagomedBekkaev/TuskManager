@@ -4,7 +4,15 @@
 {% block body %}
     <div class="container">
 
-        <a href="{{ path('app_new_categorie') }}" class="create-category-btn">Créer une catégorie</a>
+        <button id="create-category-button" onclick="toggleCreateCategoryForm()">Créer une catégorie</button>
+
+        <form action="{{ path('new_categorie') }}" method="post" style="display: none;" id="category-form">
+            <textarea name="titre" required></textarea>
+            <button type="submit">Valider</button>
+            <button type="button" id="cancel-button" onclick="cancelCreateCategory()">Annuler</button>
+        </form>
+        
+
 
         <div class="categories">
             {% for categorie in categories %}
@@ -13,25 +21,43 @@
                     <a href="{{ path('categorie_delete', {'id': categorie.id}) }}">Supprimer</a>
 
                     <!-- Title with onclick event passing the category title -->
-                    <h2 id="title-{{ loop.index }}" onclick="toggleTitleForm('{{ loop.index }}', '{{ categorie }}')">{{ categorie }}</h2>
+                    <h2 id="title-{{ loop.index }}" onclick="toggleCategoryTitleForm('{{ loop.index }}', '{{ categorie }}')">{{ categorie }}</h2>
 
                     <!-- Edit Form -->
                     <form id="edit-form-{{ loop.index }}" method="post" action="{{ path('edit_title', {'id': categorie.id}) }}" style="display: none;">
                         <!-- Textarea with an ID -->
                         <textarea id="textarea-{{ loop.index }}" name="titre" required></textarea>
                         <button type="submit">Valider</button>
-                        <button type="button" onclick="cancelEdit('{{ loop.index }}')">Annuler</button>
+                        <button type="button" onclick="cancelCategorieEdit('{{ loop.index }}')">Annuler</button>
                     </form>
 
                     <!-- Add Task Button -->
                     <button id="add-btn-{{ loop.index }}" onclick="toggleForm('form-{{ loop.index }}')">Ajouter une tache</button>
+                    <form action="{{ path('new_task', {'id': app.user.id}) }}" method="post" id="form-{{ loop.index }}" style="display: none;">
+                        <input type="hidden" name="categorie_id" value="{{ categorie.id }}">
+                        <textarea name="titre" required></textarea>
+                        <textarea name="description"></textarea>
+                        <button type="submit">Ajouter</button>
+                        <button type="button" onclick="cancelForm('form-{{ loop.index }}')">Annuler</button>
+                    </form>
+
 
                     {% if categorie.taches is not empty %}
                         <div class="tasks">
                             {% for tache in categorie.taches %}
                                 <div class="task">
-                                    <h3>{{ tache }}</h3>
-                                    <p>{{ tache.description }}</p>
+
+                                    <!-- Assuming 'categorie' and 'tache' are your category and task objects with unique 'id' properties -->
+                                    <a href="{{ path('task_delete', {'id': tache.id}) }}">Supprimer</a>
+
+                                    <h3 id="title-{{ categorie.id }}-{{ tache.id }}" onclick="toggleTaskForm('{{ categorie.id }}-{{ tache.id }}')">{{ tache.titre }}</h3>
+                                    <p id="description-{{ categorie.id }}-{{ tache.id }}" onclick="toggleTaskForm('{{ categorie.id }}-{{ tache.id }}')">{{ tache.description }}</p>
+                                    <form id="edit-task-form-{{ categorie.id }}-{{ tache.id }}" method="post" action="{{ path('edit_tache_title', {'id': tache.id}) }}" style="display: none;">
+                                        <textarea id="textarea-title-{{ categorie.id }}-{{ tache.id }}" name="titre" required></textarea>
+                                        <textarea id="textarea-description-{{ categorie.id }}-{{ tache.id }}" name="description"></textarea>
+                                        <button type="submit">Valider</button>
+                                        <button type="button" onclick="cancelEdit('{{ categorie.id }}-{{ tache.id }}')">Annuler</button>
+                                    </form>
                                 </div>
                             {% endfor %}
                         </div>

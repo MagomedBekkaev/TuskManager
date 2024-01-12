@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class CategorieController extends AbstractController
 {
@@ -61,30 +62,49 @@ class CategorieController extends AbstractController
 
 
 
-    #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
+    // #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
+    // public function newCategorie(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    // {
+    //         $categorie = new Categorie();
+    //         $categorie->setUser($this->getUser()); // Set the user before creating the form
+
+    //     $form = $this->createForm(CategorieType::class, $categorie);
+        
+    //     $form->handleRequest($request);
+
+    //     if($form->isSubmitted() && $form->isValid()) {
+    //         $categorie = $form->getData();
+
+    //         $entityManager->persist($categorie);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+    //         }
+
+    //     return $this->render('categorie/new.html.twig', [
+    //         'form' => $form->createView()
+    //     ]);
+    // }
+
+
+    #[Route('/categorie/new', name: 'new_categorie', methods: ['POST'])]
     public function newCategorie(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
-            $categorie = new Categorie();
-            $categorie->setUser($this->getUser()); // Set the user before creating the form
+        $categorie = new Categorie();
+        $categorie->setUser($this->getUser());
 
-        $form = $this->createForm(CategorieType::class, $categorie);
+        $titre = $request->request->get('titre', ''); // Fetch the title from the request
+        if (empty($titre)) {
+            throw new BadRequestHttpException('Title is required');
+        }
         
-        $form->handleRequest($request);
+        $categorie->setTitre($titre);
 
-        if($form->isSubmitted() && $form->isValid()) {
-            $categorie = $form->getData();
+        $entityManager->persist($categorie);
+        $entityManager->flush();
 
-            $entityManager->persist($categorie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
-            }
-
-        return $this->render('categorie/new.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->redirectToRoute('app_categorie');
     }
-
 
     #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
     public function editCategorie($id, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
@@ -108,6 +128,4 @@ class CategorieController extends AbstractController
 
         return $this->redirectToRoute('app_categorie');
     }
-
-    
 }

@@ -20,11 +20,11 @@ class TacheType extends AbstractType
             ->add('dateCreation')
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
         ;
     }

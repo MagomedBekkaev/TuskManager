@@ -14,7 +14,6 @@ body {
     overflow-x: auto;
     align-items: flex-start; 
     padding: 10px;
-    
 }
 
 .categorie {
@@ -42,7 +41,7 @@ body {
 .task {
     border: 1px solid #ccc;
     padding: 10px;
-    margin-bottom: 10px;
+    margin: 10px auto;
     box-sizing: border-box; 
     display: flex;
     flex-direction: column;
