@@ -100,5 +100,14 @@ class CategorieController extends AbstractController
     
         return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
     }
+
+    #[Route('/categorie/{id}/delete', name: 'categorie_delete')]
+    public function deleteCategorie (Categorie $categorie, EntityManagerInterface $entityManager){
+        $entityManager->remove($categorie);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_categorie');
+    }
+
     
 }

@@ -9,6 +9,9 @@
         <div class="categories">
             {% for categorie in categories %}
                 <div class="categorie">
+
+                    <a href="{{ path('categorie_delete', {'id': categorie.id}) }}">Supprimer</a>
+
                     <!-- Title with onclick event passing the category title -->
                     <h2 id="title-{{ loop.index }}" onclick="toggleTitleForm('{{ loop.index }}', '{{ categorie }}')">{{ categorie }}</h2>
 
