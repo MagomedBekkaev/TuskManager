@@ -5,6 +5,7 @@ use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Form\EditTitleCatType;
 use App\Repository\TacheRepository;
+use App\Repository\ProjetRepository;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -87,24 +88,34 @@ class CategorieController extends AbstractController
     // }
 
 
-    #[Route('/categorie/new', name: 'new_categorie', methods: ['POST'])]
-    public function newCategorie(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
-    {
-        $categorie = new Categorie();
-        $categorie->setUser($this->getUser());
-
-        $titre = $request->request->get('titre', ''); // Fetch the title from the request
-        if (empty($titre)) {
-            throw new BadRequestHttpException('Title is required');
-        }
-        
-        $categorie->setTitre($titre);
-
-        $entityManager->persist($categorie);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_categorie');
+    #[Route('/categorie/new/{projetId}', name: 'new_categorie', methods: ['POST'])]
+public function newCategorie(Request $request, $projetId, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, ProjetRepository $projetRepository): Response
+{
+    $projetId = $request->request->get('projet_id'); // Assume projet_id is passed in the request
+    if (!$projetId) {
+        throw new BadRequestHttpException('Projet ID is required');
     }
+
+    $projet = $projetRepository->find($projetId);
+    if (!$projet) {
+        throw $this->createNotFoundException('Projet not found');
+    }
+
+    $categorie = new Categorie();
+    $titre = $request->request->get('titre', '');
+    if (empty($titre)) {
+        throw new BadRequestHttpException('Title is required');
+    }
+
+    $categorie->setTitre($titre);
+    $categorie->setProjet($projet);
+
+    $entityManager->persist($categorie);
+    $entityManager->flush();
+
+    return $this->redirectToRoute('app_categorie');
+}
+
 
     #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
     public function editCategorie($id, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)

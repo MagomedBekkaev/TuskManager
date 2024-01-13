@@ -6,11 +6,13 @@
 
         <button id="create-category-button" onclick="toggleCreateCategoryForm()">Créer une catégorie</button>
 
-        <form action="{{ path('new_categorie') }}" method="post" style="display: none;" id="category-form">
+        <form action="{{ path('new_categorie', {'id': projet.id}) }}" method="post" style="display: none;" id="category-form">
             <textarea name="titre" required></textarea>
             <button type="submit">Valider</button>
             <button type="button" id="cancel-button" onclick="cancelCreateCategory()">Annuler</button>
         </form>
+
+
         
 
 

@@ -37,17 +37,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 50)]
     private ?string $pseudo = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Categorie::class, orphanRemoval: true)]
-    private Collection $categories;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tache::class, orphanRemoval: true)]
-    private Collection $taches;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Projet::class, orphanRemoval: true)]
+    private Collection $projets;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
-        $this->taches = new ArrayCollection();
+        $this->projets = new ArrayCollection();
     }
+
+    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Categorie::class, orphanRemoval: true)]
+    // private Collection $categories;
+
+    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tache::class, orphanRemoval: true)]
+    // private Collection $taches;
+
+    // public function __construct()
+    // {
+    //     $this->categories = new ArrayCollection();
+    //     $this->taches = new ArrayCollection();
+    // }
 
     public function __toString() {
         return $this->pseudo;
@@ -147,60 +155,90 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    // /**
+    //  * @return Collection<int, Categorie>
+    //  */
+    // public function getCategories(): Collection
+    // {
+    //     return $this->categories;
+    // }
+
+    // public function addCategory(Categorie $category): static
+    // {
+    //     if (!$this->categories->contains($category)) {
+    //         $this->categories->add($category);
+    //         $category->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeCategory(Categorie $category): static
+    // {
+    //     if ($this->categories->removeElement($category)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($category->getUser() === $this) {
+    //             $category->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    // /**
+    //  * @return Collection<int, Tache>
+    //  */
+    // public function getTaches(): Collection
+    // {
+    //     return $this->taches;
+    // }
+
+    // public function addTach(Tache $tach): static
+    // {
+    //     if (!$this->taches->contains($tach)) {
+    //         $this->taches->add($tach);
+    //         $tach->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeTach(Tache $tach): static
+    // {
+    //     if ($this->taches->removeElement($tach)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($tach->getUser() === $this) {
+    //             $tach->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
     /**
-     * @return Collection<int, Categorie>
+     * @return Collection<int, Projet>
      */
-    public function getCategories(): Collection
+    public function getProjets(): Collection
     {
-        return $this->categories;
+        return $this->projets;
     }
 
-    public function addCategory(Categorie $category): static
+    public function addProjet(Projet $projet): static
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->setUser($this);
+        if (!$this->projets->contains($projet)) {
+            $this->projets->add($projet);
+            $projet->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCategory(Categorie $category): static
+    public function removeProjet(Projet $projet): static
     {
-        if ($this->categories->removeElement($category)) {
+        if ($this->projets->removeElement($projet)) {
             // set the owning side to null (unless already changed)
-            if ($category->getUser() === $this) {
-                $category->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Tache>
-     */
-    public function getTaches(): Collection
-    {
-        return $this->taches;
-    }
-
-    public function addTach(Tache $tach): static
-    {
-        if (!$this->taches->contains($tach)) {
-            $this->taches->add($tach);
-            $tach->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTach(Tache $tach): static
-    {
-        if ($this->taches->removeElement($tach)) {
-            // set the owning side to null (unless already changed)
-            if ($tach->getUser() === $this) {
-                $tach->setUser(null);
+            if ($projet->getUser() === $this) {
+                $projet->setUser(null);
             }
         }
 

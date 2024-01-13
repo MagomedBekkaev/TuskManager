@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Tache;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CategorieRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
@@ -23,7 +24,11 @@ class Categorie
 
     #[ORM\ManyToOne(inversedBy: 'categories')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
+    private ?Projet $projet = null;
+
+    // #[ORM\ManyToOne(inversedBy: 'categories')]
+    // #[ORM\JoinColumn(nullable: false)]
+    // private ?User $user = null;
 
     public function __construct()
     {
@@ -81,14 +86,26 @@ class Categorie
         return $this->titre;
     }
 
-    public function getUser(): ?User
+    // public function getUser(): ?User
+    // {
+    //     return $this->user;
+    // }
+
+    // public function setUser(?User $user): static
+    // {
+    //     $this->user = $user;
+
+    //     return $this;
+    // }
+
+    public function getProjet(): ?Projet
     {
-        return $this->user;
+        return $this->projet;
     }
 
-    public function setUser(?User $user): static
+    public function setProjet(?Projet $projet): static
     {
-        $this->user = $user;
+        $this->projet = $projet;
 
         return $this;
     }
