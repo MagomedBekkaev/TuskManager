@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+
+<h1>Bienvenue {{ app.user.pseudo }}!</h1>
+<p>{{ app.user.email }}</p>
+
+<button id="create-projet-button" onclick="toggleCreateCategoryForm()">Créer nouveau projet</button>
+
+            <form action="{{ path('new_projet') }}" method="post" id="category-form">
+                <textarea name="titre" required></textarea>
+                <button type="submit">Valider</button>
+                <button type="button" id="cancel-button" onclick="cancelCreateCategory()">Annuler</button>
+            </form>
+
+
+<h2>Mes projets</h2>
+{% for projet in projets %}
+    <div>
+        <a href="{{ path('app_categorie', {'projetId': projet.id}) }}" class="btn btn-primary">{{ projet.titre }}</a>
+        <a href="{{ path('edit_projet', {'projetId': projet.id}) }}" class="btn btn-primary">Modifier</a>
+        <a href="{{ path('projet_delete', {'projetId': projet.id}) }}" class="btn btn-primary">Supprimer</a>
+    </div>
+{% endfor %}
+
+{% endblock %}

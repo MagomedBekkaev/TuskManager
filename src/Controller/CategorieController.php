@@ -25,13 +25,14 @@ class CategorieController extends AbstractController
         $this->security = $security;
     }
 
-    #[Route('/categorie', name: 'app_categorie')]
-    public function index(CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
+    #[Route('projet/{projetId}', name: 'app_categorie')]
+    public function index($projetId, CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
     {
         $categories = $categorieRepository->findAll();
 
         return $this->render('categorie/index.html.twig', [
             'categories' => $categories,
+            'projetId' => $projetId,
         ]);
     }
  
@@ -89,32 +90,26 @@ class CategorieController extends AbstractController
 
 
     #[Route('/categorie/new/{projetId}', name: 'new_categorie', methods: ['POST'])]
-public function newCategorie(Request $request, $projetId, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, ProjetRepository $projetRepository): Response
-{
-    $projetId = $request->request->get('projet_id'); // Assume projet_id is passed in the request
-    if (!$projetId) {
-        throw new BadRequestHttpException('Projet ID is required');
+    public function newCategorie($projetId, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, ProjetRepository $projetRepository): Response
+    {
+        $projet = $projetRepository->find($projetId);
+        $categorie = new Categorie();
+        $categorie->setProjet($projet);
+
+        $titre = $request->request->get('titre', '');
+
+        if (empty($titre)) {
+            throw new BadRequestHttpException('Title is required');
+        }
+
+        $categorie->setTitre($titre);
+        $categorie->setProjet($projet);
+
+        $entityManager->persist($categorie);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
     }
-
-    $projet = $projetRepository->find($projetId);
-    if (!$projet) {
-        throw $this->createNotFoundException('Projet not found');
-    }
-
-    $categorie = new Categorie();
-    $titre = $request->request->get('titre', '');
-    if (empty($titre)) {
-        throw new BadRequestHttpException('Title is required');
-    }
-
-    $categorie->setTitre($titre);
-    $categorie->setProjet($projet);
-
-    $entityManager->persist($categorie);
-    $entityManager->flush();
-
-    return $this->redirectToRoute('app_categorie');
-}
 
 
     #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
@@ -129,14 +124,14 @@ public function newCategorie(Request $request, $projetId, CategorieRepository $c
         $categorie->setTitre($request->request->get('titre'));
         $entityManager->flush(); 
     
-        return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+        return $this->redirect($request->headers->get('referer'));
     }
 
     #[Route('/categorie/{id}/delete', name: 'categorie_delete')]
-    public function deleteCategorie (Categorie $categorie, EntityManagerInterface $entityManager){
+    public function deleteCategorie (Request $request,Categorie $categorie, EntityManagerInterface $entityManager){
         $entityManager->remove($categorie);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_categorie');
+        return $this->redirect($request->headers->get('referer'));
     }
 }

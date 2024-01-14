@@ -1,125 +1,77 @@
-//Changer le titre d'une categorie form 
+// Utility function to toggle display
+function toggleDisplay(elementId, displayStyle) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.display = displayStyle;
+    }
+}
+
+// Toggle Category Title Form
 function toggleCategoryTitleForm(index, title) {
-    var titleElement = document.getElementById('title-' + index);
-    var formElement = document.getElementById('edit-form-' + index);
-    var textareaElement = document.getElementById('textarea-' + index);
-
     console.log("Toggling category form for ID:", index); // Debugging line
+    const isFormVisible = document.getElementById(`edit-form-${index}`).style.display !== 'none';
 
-    if (titleElement && formElement && textareaElement) {
-        // Toggle visibility
-        if (formElement.style.display === 'none') {
-            titleElement.style.display = 'none'; // Hide the title
-            formElement.style.display = 'block'; // Show the form
-            textareaElement.value = title; // Set the category title in the textarea
-        } else {
-            titleElement.style.display = 'block'; // Show the title
-            formElement.style.display = 'none'; // Hide the form
-        }
+    toggleDisplay(`title-${index}`, isFormVisible ? 'block' : 'none');
+    toggleDisplay(`edit-form-${index}`, isFormVisible ? 'none' : 'block');
+
+    if (!isFormVisible) {
+        document.getElementById(`textarea-${index}`).value = title;
     }
 }
 
-
+// Cancel Category Edit
 function cancelCategorieEdit(index) {
-    var titleElement = document.getElementById('title-' + index);
-    var formElement = document.getElementById('edit-form-' + index);
-
-    if (titleElement && formElement) {
-        // Hide the form and show the title
-        titleElement.style.display = 'block';
-        formElement.style.display = 'none';
-    }
+    toggleDisplay(`title-${index}`, 'block');
+    toggleDisplay(`edit-form-${index}`, 'none');
 }
 
-//Changer le titre d'une categorie form end
-
-//Changer le titre d'une tache form 
+// Toggle Task Form
 function toggleTaskForm(uniqueId) {
-    var titleElement = document.getElementById('title-' + uniqueId);
-    var descriptionElement = document.getElementById('description-' + uniqueId);
-    var formElement = document.getElementById('edit-task-form-' + uniqueId);
-    var titleTextareaElement = document.getElementById('textarea-title-' + uniqueId);
-    var descriptionTextareaElement = document.getElementById('textarea-description-' + uniqueId);
-
     console.log("Toggling task form for ID:", uniqueId); // Debugging line
+    const isFormVisible = document.getElementById(`edit-task-form-${uniqueId}`).style.display !== 'none';
 
-    if (titleElement && descriptionElement && formElement && titleTextareaElement && descriptionTextareaElement) {
-        // Toggle visibility
-        if (formElement.style.display === 'none') {
-            titleElement.style.display = 'none'; // Hide the title
-            descriptionElement.style.display = 'none'; // Hide the description
-            formElement.style.display = 'block'; // Show the form
-            titleTextareaElement.value = titleElement.innerText; // Set the task title in the textarea
-            descriptionTextareaElement.value = descriptionElement.innerText; // Set the task description in the textarea
-        } else {
-            titleElement.style.display = 'block'; // Show the title
-            descriptionElement.style.display = 'block'; // Show the description
-            formElement.style.display = 'none'; // Hide the form
-        }
+    toggleDisplay(`title-${uniqueId}`, isFormVisible ? 'block' : 'none');
+    toggleDisplay(`description-${uniqueId}`, isFormVisible ? 'block' : 'none');
+    toggleDisplay(`edit-task-form-${uniqueId}`, isFormVisible ? 'none' : 'block');
+
+    if (!isFormVisible) {
+        document.getElementById(`textarea-title-${uniqueId}`).value = document.getElementById(`title-${uniqueId}`).innerText;
+        document.getElementById(`textarea-description-${uniqueId}`).value = document.getElementById(`description-${uniqueId}`).innerText;
     }
 }
 
+// Cancel Task Edit
 function cancelEdit(uniqueId) {
-    var titleElement = document.getElementById('title-' + uniqueId);
-    var formElement = document.getElementById('edit-task-form-' + uniqueId);
-    var descriptionElement = document.getElementById('description-' + uniqueId);
-
-    if (titleElement && formElement && descriptionElement) {
-        titleElement.style.display = 'block'; // Show the title
-        descriptionElement.style.display = 'block'; // Show the description
-        formElement.style.display = 'none'; // Hide the form
-    }
+    toggleDisplay(`title-${uniqueId}`, 'block');
+    toggleDisplay(`description-${uniqueId}`, 'block');
+    toggleDisplay(`edit-task-form-${uniqueId}`, 'none');
 }
 
-
-
-//Changer le titre d'une tache form end
-
-//Ajouter une tache form
+// Toggle Generic Form
 function toggleForm(formId) {
-    var form = document.getElementById(formId);
-    if (form.style.display === "none" || form.style.display === "") {
-        form.style.display = "block";
-    } else {
-        form.style.display = "none";
-    }
+    const form = document.getElementById(formId);
+    const isFormVisible = form.style.display !== 'none';
+    toggleDisplay(formId, isFormVisible ? 'none' : 'block');
 }
 
-// Cancel the form and hide it
+// Cancel Generic Form
 function cancelForm(formId) {
-    var form = document.getElementById(formId);
-    var addButton = document.getElementById('add-btn-' + formId.split('-')[1]);
-
-    // Clear form fields
+    const form = document.getElementById(formId);
+    const addButtonId = 'add-btn-' + formId.split('-')[1];
     form.reset();
-
-    // Hide the form and show the Add Task button
-    form.style.display = "none";
-    addButton.style.display = "block";
+    toggleDisplay(formId, 'none');
+    toggleDisplay(addButtonId, 'block');
 }
-//Ajouter une tache form end
 
-
-
-// Show or Hide the Create Category Form
+// Toggle Create Category Form
 function toggleCreateCategoryForm() {
-    var form = document.getElementById('category-form');
-    var createButton = document.getElementById('create-category-button');
-
-    if (form.style.display === 'none' || form.style.display === '') {
-        form.style.display = 'block'; // Show the form
-        createButton.style.display = 'none'; // Hide the create button
-    } else {
-        form.style.display = 'none'; // Hide the form
-        createButton.style.display = 'block'; // Show the create button
-    }
+    const isFormVisible = document.getElementById('category-form').style.display !== 'none';
+    toggleDisplay('category-form', isFormVisible ? 'none' : 'block');
+    toggleDisplay('create-category-button', isFormVisible ? 'block' : 'none');
 }
 
-// Cancel and Hide the Create Category Form
+// Cancel Create Category Form
 function cancelCreateCategory() {
-    var form = document.getElementById('category-form');
-    var createButton = document.getElementById('create-category-button');
-
-    form.style.display = 'none'; // Hide the form
-    createButton.style.display = 'block'; // Show the create button
+    toggleDisplay('category-form', 'none');
+    toggleDisplay('create-category-button', 'block');
 }

@@ -99,3 +99,6 @@ nav ul li a:hover, .auth-links a:hover {
     opacity: 0.8;
 }
 
+.hidden {
+    display: none;
+}

@@ -48,7 +48,6 @@ class TacheController extends AbstractController
         }
     
         $tache = new Tache();
-        $tache->setUser($user);
         $tache->setCategorie($categorie);
         $tache->setTitre($titre);
         $tache->setDateCreation(new \DateTime('now'));
@@ -57,7 +56,7 @@ class TacheController extends AbstractController
         $entityManager->persist($tache);    
         $entityManager->flush();
     
-        return $this->redirectToRoute('app_categorie');
+        return $this->redirect($request->headers->get('referer'));
     }
 
 
@@ -74,17 +73,17 @@ class TacheController extends AbstractController
         $tache->setDescription($request->request->get('description'));
         $entityManager->flush(); 
 
-        return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+        return $this->redirect($request->headers->get('referer'));
     }
 
 
 
     #[Route('/tache/{id}/delete', name: 'task_delete')]
-    public function deleteTache (Tache $tache, EntityManagerInterface $entityManager){
+    public function deleteTache (Request $request,Tache $tache, EntityManagerInterface $entityManager){
         $entityManager->remove($tache);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_categorie');
+        return $this->redirect($request->headers->get('referer'));
     }
 
 
