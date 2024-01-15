@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Projet;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Projet>
@@ -20,6 +21,17 @@ class ProjetRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Projet::class);
     }
+
+    public function findByUser(User $user): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
 //    /**
 //     * @return Projet[] Returns an array of Projet objects

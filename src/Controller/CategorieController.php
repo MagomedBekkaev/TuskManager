@@ -26,16 +26,82 @@ class CategorieController extends AbstractController
     }
 
     #[Route('projet/{projetId}', name: 'app_categorie')]
-    public function index($projetId, CategorieRepository $categorieRepository, TacheRepository $tacheRepository): Response
-    {
-        $categories = $categorieRepository->findAll();
+    public function index($projetId, ProjetRepository $projetRepository, CategorieRepository $categorieRepository): Response
+{
+    $projet = $projetRepository->find($projetId);
 
-        return $this->render('categorie/index.html.twig', [
-            'categories' => $categories,
-            'projetId' => $projetId,
-        ]);
+    // Check if the project exists and belongs to the logged-in user
+    if (!$projet || $projet->getUser() !== $this->getUser()) {
+        throw $this->createNotFoundException('Project not found or access denied.');
     }
+
+    $categories = $categorieRepository->findBy(['projet' => $projetId]);
+
+    return $this->render('categorie/index.html.twig', [
+        'categories' => $categories,
+        'projet' => $projet,
+    ]);
+}
+
+
  
+    #[Route('/categorie/new/{projetId}', name: 'new_categorie', methods: ['POST'])]
+    public function newCategorie($projetId, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, ProjetRepository $projetRepository): Response
+    {
+        $projet = $projetRepository->find($projetId);
+        $categorie = new Categorie();
+        $categorie->setProjet($projet);
+
+        $titre = $request->request->get('titre', '');
+
+        if (empty($titre)) {
+            throw new BadRequestHttpException('Title is required');
+        }
+
+        $categorie->setTitre($titre);
+        $categorie->setProjet($projet);
+
+        $entityManager->persist($categorie);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+
+    #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
+    public function editCategorie($id, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
+    {
+        $categorie = $categorieRepository->find($id); // Load the existing category
+    
+        if (!$categorie) {
+            throw $this->createNotFoundException('Category not found');
+        }
+    
+        $categorie->setTitre($request->request->get('titre'));
+        $entityManager->flush(); 
+    
+        return $this->redirect($request->headers->get('referer'));
+    }
+
+    #[Route('/categorie/{id}/delete', name: 'categorie_delete')]
+    public function deleteCategorie (Request $request,Categorie $categorie, EntityManagerInterface $entityManager){
+        $entityManager->remove($categorie);
+        $entityManager->flush();
+
+        return $this->redirect($request->headers->get('referer'));
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
     // #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
     // #[Route('/categorie/{id}/edit', name: 'app_edit_categorie', methods: ['GET', 'POST'])]
     // public function new_editCategorie(Categorie $categorie = null, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
@@ -87,51 +153,3 @@ class CategorieController extends AbstractController
     //         'form' => $form->createView()
     //     ]);
     // }
-
-
-    #[Route('/categorie/new/{projetId}', name: 'new_categorie', methods: ['POST'])]
-    public function newCategorie($projetId, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager, ProjetRepository $projetRepository): Response
-    {
-        $projet = $projetRepository->find($projetId);
-        $categorie = new Categorie();
-        $categorie->setProjet($projet);
-
-        $titre = $request->request->get('titre', '');
-
-        if (empty($titre)) {
-            throw new BadRequestHttpException('Title is required');
-        }
-
-        $categorie->setTitre($titre);
-        $categorie->setProjet($projet);
-
-        $entityManager->persist($categorie);
-        $entityManager->flush();
-
-        return $this->redirect($request->headers->get('referer'));
-    }
-
-
-    #[Route('/categorie/{id}/edit', name: 'edit_title', methods: ['POST'])]
-    public function editCategorie($id, Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager)
-    {
-        $categorie = $categorieRepository->find($id); // Load the existing category
-    
-        if (!$categorie) {
-            throw $this->createNotFoundException('Category not found');
-        }
-    
-        $categorie->setTitre($request->request->get('titre'));
-        $entityManager->flush(); 
-    
-        return $this->redirect($request->headers->get('referer'));
-    }
-
-    #[Route('/categorie/{id}/delete', name: 'categorie_delete')]
-    public function deleteCategorie (Request $request,Categorie $categorie, EntityManagerInterface $entityManager){
-        $entityManager->remove($categorie);
-        $entityManager->flush();
-
-        return $this->redirect($request->headers->get('referer'));
-    }
-}

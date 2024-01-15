@@ -17,13 +17,14 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(ProjetRepository $projetRepository): Response
     {
-
-        $projets = $projetRepository->findAll();
+        $user = $this->getUser(); // Get the logged-in user
+        $projets = $projetRepository->findByUser($user); // Fetch projects for the user
 
         return $this->render('home/home.html.twig', [
             'projets' => $projets,
         ]);
     }
+
 
     #[Route('/home/new', name: 'new_projet', methods: ['POST'])]
     public function newProjet(Request $request, EntityManagerInterface $entityManager, UserRepository $userRepository): Response

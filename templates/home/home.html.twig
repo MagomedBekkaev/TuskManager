@@ -19,10 +19,21 @@
 <h2>Mes projets</h2>
 {% for projet in projets %}
     <div>
-        <a href="{{ path('app_categorie', {'projetId': projet.id}) }}" class="btn btn-primary">{{ projet.titre }}</a>
-        <a href="{{ path('edit_projet', {'projetId': projet.id}) }}" class="btn btn-primary">Modifier</a>
-        <a href="{{ path('projet_delete', {'projetId': projet.id}) }}" class="btn btn-primary">Supprimer</a>
+        <a href="{{ path('app_categorie', {'projetId': projet.id}) }}" >{{ projet.titre }}</a>
+        
+        <!-- Modifier Button for each project -->
+        <button id="edit-button-{{ projet.id }}" onclick="toggleForm('edit-form-{{ projet.id }}')">Modifier</button>
+        
+        <!-- Edit Form for each project -->
+        <form action="{{ path('edit_projet', {'projetId': projet.id}) }}" id="edit-form-{{ projet.id }}" method="post" style="display: none;">
+            <textarea id="textarea-{{ projet.id }}" name="titre" required>{{ projet.titre }}</textarea>
+            <button type="submit">Valider</button>
+            <button type="button" onclick="cancelForm('edit-form-{{ projet.id }}')">Annuler</button>
+        </form>
+
+        <a href="{{ path('projet_delete', {'projetId': projet.id}) }}">Supprimer</a>
     </div>
 {% endfor %}
+
 
 {% endblock %}
