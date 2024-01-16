@@ -31,9 +31,7 @@
             <button type="button" onclick="cancelForm('edit-form-{{ projet.id }}')">Annuler</button>
         </form>
 
-        <a href="{{ path('projet_delete', {'projetId': projet.id}) }}">Supprimer</a>
+        <a href="{{ path('projet_delete', {'id': projet.id}) }}">Supprimer</a>
     </div>
 {% endfor %}
-
-
 {% endblock %}

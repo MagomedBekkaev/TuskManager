@@ -61,7 +61,7 @@ class HomeController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    #[Route('/projet/{projetId}/delete', name: 'projet_delete')]
+    #[Route('/projet/{id}/delete', name: 'projet_delete')]
     public function deleteProjet(Request $request, Projet $projet, EntityManagerInterface $entityManager)
     {
         $entityManager->remove($projet);
