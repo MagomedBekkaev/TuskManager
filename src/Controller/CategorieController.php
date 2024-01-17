@@ -154,3 +154,27 @@ class CategorieController extends AbstractController
     //         'form' => $form->createView()
     //     ]);
     // }
+
+        // #[Route('/categorie/new', name: 'app_new_categorie', methods: ['GET', 'POST'])]
+    // public function newCategorie(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    // {
+    //         $categorie = new Categorie();
+    //         $categorie->setUser($this->getUser()); // Set the user before creating the form
+
+    //     $form = $this->createForm(CategorieType::class, $categorie);
+        
+    //     $form->handleRequest($request);
+
+    //     if($form->isSubmitted() && $form->isValid()) {
+    //         $categorie = $form->getData();
+
+    //         $entityManager->persist($categorie);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_categorie'); // Redirect after successful form submission
+    //         }
+
+    //     return $this->render('categorie/new.html.twig', [
+    //         'form' => $form->createView()
+    //     ]);
+    // }
