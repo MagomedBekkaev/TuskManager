@@ -35,7 +35,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified = false;
 
     #[ORM\Column(length: 50)]
-    private ?string $pseudo = null;
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 50)]
+    private ?string $prenom = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Projet::class, orphanRemoval: true)]
     private Collection $projets;
@@ -44,18 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->projets = new ArrayCollection();
     }
-
-    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Categorie::class, orphanRemoval: true)]
-    // private Collection $categories;
-
-    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tache::class, orphanRemoval: true)]
-    // private Collection $taches;
-
-    // public function __construct()
-    // {
-    //     $this->categories = new ArrayCollection();
-    //     $this->taches = new ArrayCollection();
-    // }
 
     public function __toString() {
         return $this->pseudo;
@@ -143,77 +134,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPseudo(): ?string
-    {
-        return $this->pseudo;
+    public function getNom(): ?string
+    { 
+    return $this->nom;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setNom(string $nom): self
     {
-        $this->pseudo = $pseudo;
-
-        return $this;
+        return $this->nom = $nom;
     }
 
-    // /**
-    //  * @return Collection<int, Categorie>
-    //  */
-    // public function getCategories(): Collection
-    // {
-    //     return $this->categories;
-    // }
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
 
-    // public function addCategory(Categorie $category): static
-    // {
-    //     if (!$this->categories->contains($category)) {
-    //         $this->categories->add($category);
-    //         $category->setUser($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeCategory(Categorie $category): static
-    // {
-    //     if ($this->categories->removeElement($category)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($category->getUser() === $this) {
-    //             $category->setUser(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
-
-    // /**
-    //  * @return Collection<int, Tache>
-    //  */
-    // public function getTaches(): Collection
-    // {
-    //     return $this->taches;
-    // }
-
-    // public function addTach(Tache $tach): static
-    // {
-    //     if (!$this->taches->contains($tach)) {
-    //         $this->taches->add($tach);
-    //         $tach->setUser($this);
-    //     }
-
-    //     return $this;
-    // }
-
-    // public function removeTach(Tache $tach): static
-    // {
-    //     if ($this->taches->removeElement($tach)) {
-    //         // set the owning side to null (unless already changed)
-    //         if ($tach->getUser() === $this) {
-    //             $tach->setUser(null);
-    //         }
-    //     }
-
-    //     return $this;
-    // }
+    public function setPrenom(string $prenom): self
+    {
+        return $this->prenom = $prenom;
+    }
 
     /**
      * @return Collection<int, Projet>

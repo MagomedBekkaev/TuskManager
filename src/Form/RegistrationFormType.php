@@ -21,23 +21,25 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('pseudo', TextType::class)
+            ->add('nom')
+            ->add('prenom')
             ->add('agreeTerms', CheckboxType::class, [
                                 'mapped' => false,
+                                'label' => 'Accepter les conditions générales d\'utilisation',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'You should agree to our terms.',
+                        'message' => 'Vous devez accepter les conditions générales d\'utilisation.',
                     ]),
                 ],
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match',
+                'invalid_message' => 'Les mots de passe ne correspondent pas',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],               
+                'first_options' => ['label' => 'Mot de passe'],
+                'second_options' => ['label' => 'Confirmer le mot de passe'],               
                 
                 
                 

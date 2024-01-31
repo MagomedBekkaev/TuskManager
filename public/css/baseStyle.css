@@ -11,7 +11,7 @@ html, body {
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #F0F0F0 !important;
+    background-color: #F0F0F0;
 }
 
 
@@ -48,7 +48,7 @@ body {
 }
 
 nav {
-    background-color: #0E2F56; 
+    background-color: #1b263b; 
     color: white;
     display: flex;
     justify-content: space-between;
