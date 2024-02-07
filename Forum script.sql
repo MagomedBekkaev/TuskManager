@@ -1,133 +1,90 @@
-CREATE TABLE Utilisateur(
-   id INT,
-   email VARCHAR(50) NOT NULL,
-   nom VARCHAR(50) NOT NULL,
-   prenom VARCHAR(50) NOT NULL,
-   mdp VARCHAR(50) NOT NULL,
-   dateNaissance DATE NOT NULL,
-   role VARCHAR(50),
-   dateInscripiton DATE NOT NULL,
+CREATE TABLE ForumUser(
+   id_utilisateur INT,
+   pseudo VARCHAR(50) NOT NULL,
+   signedAt DATETIME NOT NULL,
    avatar VARCHAR(50),
-   PRIMARY KEY(id),
-   UNIQUE(email)
+   PRIMARY KEY(id_utilisateur)
 );
 
 CREATE TABLE Forum(
-   id VARCHAR(50),
-   titre VARCHAR(50) NOT NULL,
+   id_forum VARCHAR(50),
+   title VARCHAR(50) NOT NULL,
    description VARCHAR(50),
-   dateCreation DATE NOT NULL,
-   PRIMARY KEY(id),
-   UNIQUE(titre)
+   createdAt DATETIME NOT NULL,
+   PRIMARY KEY(id_forum),
+   UNIQUE(title)
 );
 
-CREATE TABLE Categorie(
-   id VARCHAR(50),
-   contenu VARCHAR(50),
-   auteur VARCHAR(50) NOT NULL,
-   dateCreation VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id)
+CREATE TABLE Category(
+   id_category VARCHAR(50),
+   content VARCHAR(50),
+   id_forum VARCHAR(50) NOT NULL,
+   PRIMARY KEY(id_category),
+   FOREIGN KEY(id_forum) REFERENCES Forum(id_forum)
 );
 
-CREATE TABLE Signalement(
-   id VARCHAR(50),
-   utilisateur VARCHAR(50),
-   message VARCHAR(50),
-   sujet VARCHAR(50),
-   raison VARCHAR(50),
-   statut VARCHAR(50),
-   dateSignal DATE,
-   PRIMARY KEY(id)
-);
-
-CREATE TABLE Statistique(
-   id VARCHAR(50),
-   nbUtilisateurs VARCHAR(50),
-   nbForum VARCHAR(50),
-   nbSujet VARCHAR(50),
-   nbMessage VARCHAR(50),
-   nbSignalement VARCHAR(50),
-   PRIMARY KEY(id)
-);
-
-CREATE TABLE Sujet(
-   id VARCHAR(50),
-   titre VARCHAR(50) NOT NULL,
+CREATE TABLE Topic(
+   id_topic VARCHAR(50),
+   title VARCHAR(500) NOT NULL,
    description VARCHAR(50) NOT NULL,
-   auteur VARCHAR(50) NOT NULL,
-   dateCreation DATE,
-   nbVues INT,
-   id_1 VARCHAR(50) NOT NULL,
-   id_2 VARCHAR(50),
-   id_3 INT NOT NULL,
-   PRIMARY KEY(id),
-   FOREIGN KEY(id_1) REFERENCES Categorie(id),
-   FOREIGN KEY(id_2) REFERENCES Forum(id),
-   FOREIGN KEY(id_3) REFERENCES Utilisateur(id)
+   author VARCHAR(50) NOT NULL,
+   nbView INT,
+   createdAt DATETIME,
+   updatedAt DATETIME NOT NULL,
+   updatedBy VARCHAR(50),
+   id_category VARCHAR(50) NOT NULL,
+   id_utilisateur INT NOT NULL,
+   PRIMARY KEY(id_topic),
+   FOREIGN KEY(id_category) REFERENCES Category(id_category),
+   FOREIGN KEY(id_utilisateur) REFERENCES ForumUser(id_utilisateur)
 );
 
-CREATE TABLE Message(
-   id VARCHAR(50),
-   contenu VARCHAR(50),
-   auteur VARCHAR(50) NOT NULL,
-   dateCreation VARCHAR(50) NOT NULL,
-   id_1 VARCHAR(50),
-   id_2 INT NOT NULL,
-   PRIMARY KEY(id),
-   FOREIGN KEY(id_1) REFERENCES Sujet(id),
-   FOREIGN KEY(id_2) REFERENCES Utilisateur(id)
+CREATE TABLE Comment(
+   id_comment VARCHAR(50),
+   content VARCHAR(50),
+   author VARCHAR(50) NOT NULL,
+   createdAt DATETIME NOT NULL,
+   updatedAt DATETIME,
+   updatedBy VARCHAR(50),
+   id_comment_1 VARCHAR(50) NOT NULL,
+   id_topic VARCHAR(50) NOT NULL,
+   id_utilisateur INT NOT NULL,
+   PRIMARY KEY(id_comment),
+   FOREIGN KEY(id_comment_1) REFERENCES Comment(id_comment),
+   FOREIGN KEY(id_topic) REFERENCES Topic(id_topic),
+   FOREIGN KEY(id_utilisateur) REFERENCES ForumUser(id_utilisateur)
 );
 
-CREATE TABLE Reponse(
-   id VARCHAR(50),
-   contenu VARCHAR(50),
-   auteur VARCHAR(50) NOT NULL,
-   dateCreation VARCHAR(50) NOT NULL,
-   id_1 VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id),
-   FOREIGN KEY(id_1) REFERENCES Message(id)
+CREATE TABLE Follow(
+   id_utilisateur INT,
+   id_forum VARCHAR(50),
+   id_topic VARCHAR(50),
+   followedAt DATE,
+   PRIMARY KEY(id_utilisateur, id_forum, id_topic),
+   FOREIGN KEY(id_utilisateur) REFERENCES ForumUser(id_utilisateur),
+   FOREIGN KEY(id_forum) REFERENCES Forum(id_forum),
+   FOREIGN KEY(id_topic) REFERENCES Topic(id_topic)
 );
 
-CREATE TABLE Moderation(
-   id VARCHAR(50),
-   moderateur VARCHAR(50) NOT NULL,
-   message VARCHAR(50) NOT NULL,
-   raison VARCHAR(50),
-   dateModeration DATE NOT NULL,
-   id_1 VARCHAR(50) NOT NULL,
-   PRIMARY KEY(id),
-   FOREIGN KEY(id_1) REFERENCES Message(id)
+CREATE TABLE Vote(
+   id_utilisateur INT,
+   id_comment VARCHAR(50),
+   vote AS ENUM ('down', 'up') NOT NULL,
+   PRIMARY KEY(id_utilisateur, id_comment),
+   FOREIGN KEY(id_utilisateur) REFERENCES ForumUser(id_utilisateur),
+   FOREIGN KEY(id_comment) REFERENCES Comment(id_comment)
 );
 
-CREATE TABLE Abonner(
-   id INT,
-   id_1 VARCHAR(50),
-   id_2 VARCHAR(50),
-   dateAbbonnement VARCHAR(50),
-   PRIMARY KEY(id, id_1, id_2),
-   FOREIGN KEY(id) REFERENCES Utilisateur(id),
-   FOREIGN KEY(id_1) REFERENCES Forum(id),
-   FOREIGN KEY(id_2) REFERENCES Sujet(id)
-);
-
-CREATE TABLE Voter(
-   id INT,
-   id_1 VARCHAR(50),
-   upVote VARCHAR(50),
-   downVote VARCHAR(50),
-   PRIMARY KEY(id, id_1),
-   FOREIGN KEY(id) REFERENCES Utilisateur(id),
-   FOREIGN KEY(id_1) REFERENCES Message(id)
-);
-
-CREATE TABLE Signaler(
-   id INT,
-   id_1 VARCHAR(50),
-   id_2 VARCHAR(50),
-   id_3 VARCHAR(50),
-   PRIMARY KEY(id, id_1, id_2, id_3),
-   FOREIGN KEY(id) REFERENCES Utilisateur(id),
-   FOREIGN KEY(id_1) REFERENCES Sujet(id),
-   FOREIGN KEY(id_2) REFERENCES Message(id),
-   FOREIGN KEY(id_3) REFERENCES Signalement(id)
+CREATE TABLE Report(
+   id_utilisateur INT,
+   id_utilisateur_1 INT,
+   id_topic VARCHAR(50),
+   id_comment VARCHAR(50),
+   reason VARCHAR(50),
+   createdAt DATETIME,
+   PRIMARY KEY(id_utilisateur, id_utilisateur_1, id_topic, id_comment),
+   FOREIGN KEY(id_utilisateur) REFERENCES ForumUser(id_utilisateur),
+   FOREIGN KEY(id_utilisateur_1) REFERENCES ForumUser(id_utilisateur),
+   FOREIGN KEY(id_topic) REFERENCES Topic(id_topic),
+   FOREIGN KEY(id_comment) REFERENCES Comment(id_comment)
 );
